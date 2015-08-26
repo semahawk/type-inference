@@ -34,11 +34,24 @@ int main(void)
   new_symbol(env, "pred", type_function(t_int, t_int));
   new_symbol(env, "pair", type_function(var1, type_function(var2, type_pair(var1, var2))));
   new_symbol(env, "cond", type_function(t_bool, type_function(var3, type_function(var3, var3)))),
-  new_symbol(env, "times", type_function(t_int, type_function(t_int, t_int)));
+
+  new_symbol(env, "+", type_function(t_int, type_function(t_int, t_int)));
+  new_symbol(env, "*", type_function(t_int, type_function(t_int, t_int)));
+  new_symbol(env, ">", type_function(t_int, type_function(t_int, t_bool)));
+  new_symbol(env, "<", type_function(t_int, type_function(t_int, t_bool)));
 
   node_t *pair = apply(apply(ident("pair"), apply(ident("f"), integer(4))), apply(ident("f"), ident("true")));
 
   node_t *examples[] = {
+    /* basically 2 + 2 */
+    binop("+", integer(2), integer(3)),
+    /* (2 + 2) * 2 */
+    binop("*", integer(2), binop("+", integer(2), integer(2))),
+    /* 2 > 3 */
+    binop(">", integer(2), integer(3)),
+    /* should fail */
+    /* 5 * (7 < 11) */
+    binop("*", integer(5), binop("<", integer(7), integer(11))),
     /* factorial */
     letrec("factorial", /* letrec factorial = */
         lambda("n",    /* fn n => */

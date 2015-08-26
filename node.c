@@ -86,6 +86,11 @@ node_t *apply(node_t *fn, node_t *arg)
   return node;
 }
 
+node_t *binop(const char *op, node_t *lhs, node_t *rhs)
+{
+  return apply(apply(ident(op), lhs), rhs);
+}
+
 void print_node(node_t *node)
 {
   switch (node->type){

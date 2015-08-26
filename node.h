@@ -48,6 +48,7 @@ node_t *ident(const char *name);
 node_t *let   (const char *param, node_t *def, node_t *body);
 node_t *letrec(const char *param, node_t *def, node_t *body);
 node_t *apply(node_t *fn, node_t *arg);
+node_t *binop(const char *op, node_t *lhs, node_t *rhs);
 
 void print_node(node_t *node);
 

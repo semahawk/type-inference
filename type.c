@@ -148,11 +148,6 @@ bool is_type_operator(type_t *type)
 
 void print_type(type_t *type)
 {
-  if (type == NULL){
-    printf("couldn't infer the type");
-    return;
-  }
-
   switch (type->ttype){
     case TYPE_VARIABLE:
       if (type->instance){

@@ -285,9 +285,8 @@ type_t *infer_type_internal(env_t *env, node_t *node, ng_t *non_generic)
     non_generic = new_non_generic();
 
   switch (node->type){
-    case INTEGER: {
+    case INTEGER:
       return type_integer();
-    }
     case IDENT: {
       type_t *type = symbol_lookup(env, node->name, non_generic);
 

@@ -311,29 +311,16 @@ type_t *infer_type_internal(env_t *env, node_t *node, ng_t *non_generic)
 
       result_type = infer_type_internal(new_env, node->body, new_non_generic);
 
-      if (result_type)
-        return type_function(arg_type, result_type);
-      else
-        return NULL;
+      return type_function(arg_type, result_type);
     }
     case APPLY: {
       type_t *fun_type = infer_type_internal(env, node->fn, non_generic);
       type_t *arg_type = infer_type_internal(env, node->arg, non_generic);
       type_t *result_type = type_variable();
 
-      /*print_type(fun_type);*/
-      /*printf("; ");*/
-      /*print_type(arg_type);*/
-      /*printf("; ");*/
-      /*print_type(result_type);*/
-      /*printf("; ");*/
+      unify(type_function(arg_type, result_type), fun_type);
 
-      if (fun_type && arg_type){
-        unify(type_function(arg_type, result_type), fun_type);
-        return result_type;
-      } else {
-        return NULL;
-      }
+      return result_type;
     }
     case LET: {
       type_t *def_type = infer_type_internal(env, node->def, non_generic);
@@ -341,10 +328,7 @@ type_t *infer_type_internal(env_t *env, node_t *node, ng_t *non_generic)
 
       new_symbol(new_env, node->name, def_type);
 
-      if (def_type)
-        return infer_type_internal(new_env, node->body, non_generic);
-      else
-        return NULL;
+      return infer_type_internal(new_env, node->body, non_generic);
     }
     case LETREC: {
       type_t *new_type = type_variable();
@@ -357,15 +341,13 @@ type_t *infer_type_internal(env_t *env, node_t *node, ng_t *non_generic)
 
       def_type = infer_type_internal(new_env, node->def, non_generic);
 
-      if (def_type){
-        unify(new_type, def_type);
-        return infer_type_internal(new_env, node->body, non_generic);
-      } else {
-        return NULL;
-      }
+      unify(new_type, def_type);
+
+      return infer_type_internal(new_env, node->body, non_generic);
     }
     default:
-      return NULL;
+      fprintf(stderr, "#unknown#infer_type_internal#\n");
+      exit(1);
   }
 }
 

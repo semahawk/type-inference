@@ -61,7 +61,7 @@ int main(void)
                         apply(ident("zero"), ident("n"))),
                     integer(1)),
                 apply(    /* times n */
-                    apply(ident("times"), ident("n")),
+                    apply(ident("*"), ident("n")),
                     apply(ident("factorial"),
                         apply(ident("pred"), ident("n")))
                 )

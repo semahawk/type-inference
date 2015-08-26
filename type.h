@@ -21,6 +21,7 @@ typedef enum {
   /* type operator */
   TYPE_INTEGER,
   TYPE_BOOLEAN,
+  TYPE_STRING,
   TYPE_FUNCTION,
   TYPE_PAIR
 } ttype_t;
@@ -49,6 +50,7 @@ type_t *type_operator_2_(const char *, unsigned, ttype_t, type_t *type_one, type
 
 type_t *type_integer(void);
 type_t *type_boolean(void);
+type_t *type_string(void);
 
 type_t *type_function(type_t *in, type_t *out);
 type_t *type_pair(type_t *fst, type_t *snd);

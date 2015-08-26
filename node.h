@@ -15,6 +15,8 @@
 
 enum node_type {
   INTEGER,
+  STRING,
+
   LAMBDA,
   IDENT,
   APPLY,
@@ -25,11 +27,14 @@ enum node_type {
 typedef struct _node {
   enum node_type type;
   /* we really don't care about space efficency */
-  /* integer */
-  int value;
   /* common */
   const char *name;
   struct _node *body;
+  /* literals */
+  struct {
+    int integer;
+    const char *string;
+  } value;
   /* lambda */
   /*   name, body */
   /* ident */
@@ -43,6 +48,8 @@ typedef struct _node {
 } node_t;
 
 node_t *integer(int value);
+node_t *string(const char *value);
+
 node_t *lambda(const char *param, node_t *body);
 node_t *ident(const char *name);
 node_t *let   (const char *param, node_t *def, node_t *body);

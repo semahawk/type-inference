@@ -30,7 +30,16 @@ node_t *integer(int value)
 {
   node_t *node = make_node(INTEGER);
 
-  node->value = value;
+  node->value.integer = value;
+
+  return node;
+}
+
+node_t *string(const char *value)
+{
+  node_t *node = make_node(STRING);
+
+  node->value.string = value;
 
   return node;
 }
@@ -95,7 +104,10 @@ void print_node(node_t *node)
 {
   switch (node->type){
     case INTEGER:
-      printf("%d", node->value);
+      printf("%d", node->value.integer);
+      break;
+    case STRING:
+      printf("\"%s\"", node->value.string);
       break;
     case LAMBDA:
       printf("(fun %s -> ", node->name);

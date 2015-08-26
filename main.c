@@ -24,6 +24,7 @@ int main(void)
 
   type_t *t_int = type_integer();
   type_t *t_bool = type_boolean();
+  type_t *t_str = type_string();
 
   type_t *var1 = type_variable();
   type_t *var2 = type_variable();
@@ -40,6 +41,8 @@ int main(void)
   new_symbol(env, ">", type_function(t_int, type_function(t_int, t_bool)));
   new_symbol(env, "<", type_function(t_int, type_function(t_int, t_bool)));
 
+  new_symbol(env, "strlen", type_function(t_str, t_int));
+
   node_t *pair = apply(apply(ident("pair"), apply(ident("f"), integer(4))), apply(ident("f"), ident("true")));
 
   node_t *examples[] = {
@@ -52,6 +55,8 @@ int main(void)
     /* should fail */
     /* 5 * (7 < 11) */
     binop("*", integer(5), binop("<", integer(7), integer(11))),
+    /* let bar(x, y) = foo(x) + y in bar("fubar") */
+    let("bar", lambda("x", lambda("y", binop("+", apply(ident("strlen"), ident("x")), ident("y")))), apply(ident("bar"), string("fubar"))),
     /* factorial */
     letrec("factorial", /* letrec factorial = */
         lambda("n",    /* fn n => */

@@ -116,6 +116,11 @@ type_t *type_boolean(void)
   return type_operator_0(TYPE_BOOLEAN);
 }
 
+type_t *type_string(void)
+{
+  return type_operator_0(TYPE_STRING);
+}
+
 type_t *type_function(type_t *from, type_t *to)
 {
   return type_operator_2(TYPE_FUNCTION, from, to);
@@ -165,6 +170,9 @@ void print_type(type_t *type)
       break;
     case TYPE_BOOLEAN:
       printf("bool");
+      break;
+    case TYPE_STRING:
+      printf("string");
       break;
     case TYPE_FUNCTION:
       printf("(");

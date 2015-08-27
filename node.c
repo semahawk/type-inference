@@ -54,6 +54,27 @@ node_t *lambda(const char *param, node_t *body)
   return node;
 }
 
+node_t *func(node_t *body, ...)
+{
+  node_t *node;
+  va_list vl;
+  const char *param;
+
+  va_start(vl, body);
+
+  while (1)
+    if ((param = va_arg(vl, const char *)) == NULL)
+      break;
+    else {
+      node = lambda(param, body);
+      body = node;
+    }
+
+  va_end(vl);
+
+  return node;
+}
+
 node_t *ident(const char *name)
 {
   node_t *node = make_node(IDENT);

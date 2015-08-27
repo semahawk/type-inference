@@ -61,6 +61,8 @@ int main(void)
     call(ident("pair"), integer(11), string("13"), NULL),
     /* cond(true, "yes", "no") */
     call(ident("cond"), ident("true"), string("yes"), string("no"), NULL),
+    /* let sum = fun x y -> x + y in sum(2, 3) */
+    let("sum", func(binop("+", ident("x"), ident("y")), "x", "y", NULL), call(ident("sum"), integer(2), integer(3), NULL)),
     /* factorial */
     letrec("factorial", /* letrec factorial = */
         lambda("n",    /* fn n => */

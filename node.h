@@ -53,6 +53,7 @@ node_t *integer(int value);
 node_t *string(const char *value);
 
 node_t *lambda(const char *param, node_t *body);
+node_t *func(node_t *body, ...);
 node_t *ident(const char *name);
 node_t *let   (const char *param, node_t *def, node_t *body);
 node_t *letrec(const char *param, node_t *def, node_t *body);

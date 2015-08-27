@@ -95,6 +95,24 @@ node_t *apply(node_t *fn, node_t *arg)
   return node;
 }
 
+node_t *call(node_t *fn, node_t *arg, ...)
+{
+  node_t *node = apply(fn, arg), *other_arg;
+  va_list vl;
+
+  va_start(vl, arg);
+
+  while (1)
+    if ((other_arg = va_arg(vl, node_t *)) == NULL)
+      break;
+    else
+      node = apply(node, other_arg);
+
+  va_end(vl);
+
+  return node;
+}
+
 node_t *binop(const char *op, node_t *lhs, node_t *rhs)
 {
   return apply(apply(ident(op), lhs), rhs);

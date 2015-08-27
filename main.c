@@ -57,6 +57,10 @@ int main(void)
     binop("*", integer(5), binop("<", integer(7), integer(11))),
     /* let bar(x, y) = foo(x) + y in bar("fubar") */
     let("bar", lambda("x", lambda("y", binop("+", apply(ident("strlen"), ident("x")), ident("y")))), apply(ident("bar"), string("fubar"))),
+    /* pair(11, "13") */
+    call(ident("pair"), integer(11), string("13"), NULL),
+    /* cond(true, "yes", "no") */
+    call(ident("cond"), ident("true"), string("yes"), string("no"), NULL),
     /* factorial */
     letrec("factorial", /* letrec factorial = */
         lambda("n",    /* fn n => */
